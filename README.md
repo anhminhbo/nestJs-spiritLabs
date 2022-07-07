@@ -24,7 +24,7 @@
 
 ## Description
 
-SpiritLabs internship training about nestJs
+SpiritLabs internship training about nestJs.
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
