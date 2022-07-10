@@ -15,3 +15,4 @@ import { ConfigModule } from '@nestjs/config';
   providers: [AppService],
 })
 export class AppModule {}
+//  npm run migration:generate -- BaseMigrations -d src/database/migrations

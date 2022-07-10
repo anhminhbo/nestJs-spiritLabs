@@ -21,14 +21,15 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -f src/config/typeorm.config-migrations.ts",
-    "migration:generate": "npm run typeorm:cli -- migration:generate -d src/database/migrations -n",
+    "migration:generate": "npm run build && npm run typeorm:cli migration:generate  -- -n",
     "migration:create": "npm run typeorm:cli -- migration:create -- -n src/database/migrations",
     "migration:run": "npm run typeorm:cli -- migration:run",
     "migration:revert": "npm run typeorm:cli -- migration:revert",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config -n src/config/typeorm.config-migrations.ts",
     "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed -n src/config/typeorm.config-migrations.ts",
     "db:refresh": "npm run typeorm:cli schema:drop && npm run migration:run && npm run seed:run"
-  },  "dependencies": {
+  },
+  "dependencies": {
     "@nestjs/common": "^8.4.4",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.4.4",
@@ -38,7 +39,7 @@
     "@nestjs/platform-express": "^8.4.4",
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^8.0.3",
-    "@ngneat/falso": "^5.0.0",
+    "@ngneat/falso": "^5.7.0",
     "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
