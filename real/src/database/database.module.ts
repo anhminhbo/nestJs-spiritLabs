@@ -19,10 +19,10 @@ import './override-typeorm';
           entities: [__dirname + '/../**/*.entity{.ts,.js}'],
           synchronize: true,
           logging: ['error'],
-          maxQueryExecutionTime: 1500
+          maxQueryExecutionTime: 1500,
         };
-      }
-    })
-  ]
+      },
+    }),
+  ],
 })
 export class DatabaseModule {}
