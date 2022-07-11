@@ -1,0 +1,32 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5431,
+  "username": "admin",
+  "password": "admin",
+  "database": "kiko_driver",
+  "synchronize": false,
+  "dropSchema": false,
+  "keepConnectionAlive": true,
+  "logging": false,
+  "entities": [
+    "src/database/../**/entities/*.entity{.ts,.js}"
+  ],
+  "migrations": [
+    "src/database/migrations/**/*{.ts,.js}"
+  ],
+  "seeds": [
+    "src/database/seeds/**/*{.ts,.js}"
+  ],
+  "factories": [
+    "src/database/factories/**/*{.ts,.js}"
+  ],
+  "cli": {
+    "entitiesDir": "src",
+    "migrationsDir": "src/database/migrations",
+    "subscribersDir": "subscriber"
+  },
+  "extra": {
+    "max": 100
+  }
+}
