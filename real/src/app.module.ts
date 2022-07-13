@@ -10,10 +10,13 @@ import { KikoLoggerModule } from './logger/logger.module';
 import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import { SocketGatewayModule } from './socket-gateway/socket-gateway.module';
 import { DatabaseModule } from './database/database.module';
-import { RolesGuard } from './modules/user/role/role.guard';
+import { RolesGuard } from './modules/role/role.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 @Module({
   imports: [
+    UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [appConfig, postgresConfig, kafkaConfig],
@@ -22,7 +25,7 @@ import { APP_GUARD } from '@nestjs/core';
     SocketGatewayModule,
     KikoLoggerModule,
     DatabaseModule,
-
+    AuthModule,
     // RedisCacheModule,
     // KafkaModule.registerAsync(['CHAT_SERVICE'], {
     //   imports: [ConfigModule],
@@ -44,12 +47,6 @@ import { APP_GUARD } from '@nestjs/core';
     // }),
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

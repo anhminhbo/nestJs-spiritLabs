@@ -17,13 +17,14 @@ const postgres_config_1 = require("./config/postgres.config");
 const logger_module_1 = require("./logger/logger.module");
 const socket_gateway_module_1 = require("./socket-gateway/socket-gateway.module");
 const database_module_1 = require("./database/database.module");
-const role_guard_1 = require("./modules/user/role/role.guard");
-const core_1 = require("@nestjs/core");
+const user_module_1 = require("./modules/user/user.module");
+const auth_module_1 = require("./modules/auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            user_module_1.UserModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
                 load: [app_config_1.default, postgres_config_1.default, kafka_config_1.default],
@@ -32,15 +33,10 @@ AppModule = __decorate([
             socket_gateway_module_1.SocketGatewayModule,
             logger_module_1.KikoLoggerModule,
             database_module_1.DatabaseModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [
-            app_service_1.AppService,
-            {
-                provide: core_1.APP_GUARD,
-                useClass: role_guard_1.RolesGuard,
-            },
-        ],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

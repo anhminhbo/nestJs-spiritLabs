@@ -17,7 +17,7 @@ import './override-typeorm';
           password: configService.get('postgres.password'),
           database: configService.get('postgres.database'),
           entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-          synchronize: true,
+          synchronize: false,
           logging: ['error'],
           maxQueryExecutionTime: 1500,
         };

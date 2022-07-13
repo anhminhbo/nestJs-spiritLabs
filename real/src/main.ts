@@ -28,7 +28,7 @@ async function bootstrap() {
     exclude: ['/'],
   });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
-  app.useGlobalInterceptors(new TransformResponseInterceptor());
+  // app.useGlobalInterceptors(new TransformResponseInterceptor());
   const config = new DocumentBuilder()
     .setTitle('Chat Backend')
     .setDescription('Chat Backend')
@@ -46,7 +46,6 @@ async function bootstrap() {
     swaggerOptions: { displayRequestDuration: true },
   };
   SwaggerModule.setup('chat-docs', app, document, swaggerCustomOptions);
-
   await app.listen(configService.get('app.port'));
 }
 bootstrap();
