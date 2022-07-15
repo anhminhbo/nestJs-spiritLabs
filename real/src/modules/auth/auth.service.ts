@@ -20,9 +20,16 @@ export class AuthService {
     return user;
   }
 
-  async login(user: User): Promise<LoginResponse> {
+  async genToken(user: User): Promise<LoginResponse> {
     const payload: JwtPayload = { userId: user.id, role: user.role };
-    const accessToken = await this.jwtService.sign(payload);
-    return { accessToken };
+    const accessToken = await this.jwtService.sign(payload, {
+      expiresIn: '20m',
+      secret: 'accessToken',
+    });
+    const refreshToken = await this.jwtService.sign(payload, {
+      expiresIn: '1d',
+      secret: 'refreshToken',
+    });
+    return { accessToken, refreshToken };
   }
 }

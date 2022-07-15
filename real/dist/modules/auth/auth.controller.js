@@ -17,20 +17,34 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const cookie_options_1 = require("./jwt/cookie.options");
 const local_auth_guard_1 = require("./local/local-auth.guard");
-const common_2 = require("@nestjs/common");
+const jwt_access_token_guard_1 = require("./jwt/jwt-access-token.guard");
+const jwt_refresh_token_guard_1 = require("./jwt/jwt-refresh-token.guard");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
     async login(req) {
-        common_2.Logger.log(req);
-        const loginResponse = await this.authService.login(req.user);
-        req.res.cookie('accessToken', loginResponse.accessToken, cookie_options_1.cookieOptions);
-        return loginResponse;
+        const user = req.user;
+        const { accessToken, refreshToken } = await this.authService.genToken(user);
+        req.res.cookie('refreshToken', refreshToken, {
+            maxAge: 60 * 60,
+        });
+        return { accessToken };
     }
     async logout(req) {
-        req.res.clearCookie('accessToken', cookie_options_1.cookieOptions);
-        return 200;
+        console.log(req);
+        req.res.clearCookie('refreshToken', cookie_options_1.cookieOptions);
+        return req
+            .res.header('Authorization', '')
+            .json({ message: 'Log out successfully' });
+    }
+    async genToken(req) {
+        const user = req.user;
+        const { accessToken, refreshToken } = await this.authService.genToken(user);
+        req.res.cookie('refreshToken', refreshToken, {
+            maxAge: 60 * 60,
+        });
+        return { accessToken };
     }
 };
 __decorate([
@@ -42,12 +56,21 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_access_token_guard_1.AccessTokenGuard),
     (0, common_1.Post)('/logout'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "logout", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_refresh_token_guard_1.RefreshTokenGuard),
+    (0, common_1.Post)('/genToken'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "genToken", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

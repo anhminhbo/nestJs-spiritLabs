@@ -1,3 +1,4 @@
+import { RefreshTokenGuard } from './../auth/jwt/jwt-refresh-token.guard';
 import {
   Controller,
   Get,
@@ -11,22 +12,21 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entity/user.entity';
-import RequestWithUser from '../auth/interface/request-with-user';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesGuard } from '../role/role.guard';
-import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../role/role.decorator';
 import { Role } from '../role/role.enum';
+import { AccessTokenGuard } from '../auth/jwt/jwt-access-token.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AccessTokenGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Get all user' })
   @ApiResponse({
@@ -84,6 +84,8 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(AccessTokenGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.CUSTOMER)
   @ApiOperation({ summary: 'Get user based on id' })
   @ApiParam({
     name: 'id',
@@ -143,6 +145,8 @@ export class UserController {
   }
 
   @Post('create')
+  @UseGuards(AccessTokenGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Create new user in db' })
   @ApiBody({
     schema: {
@@ -183,6 +187,8 @@ export class UserController {
   }
 
   @Patch('update')
+  @UseGuards(AccessTokenGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Update user' })
   @ApiBody({
     schema: {
@@ -228,6 +234,8 @@ export class UserController {
   }
 
   @Delete('/delete/:id')
+  @UseGuards(AccessTokenGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Create new user in db' })
   @ApiParam({
     name: 'id',

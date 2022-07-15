@@ -14,7 +14,8 @@ const passport_1 = require("@nestjs/passport");
 const user_module_1 = require("../user/user.module");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
-const jwt_auth_guard_1 = require("./jwt/jwt-auth.guard");
+const jwt_refresh_token_guard_1 = require("./jwt/jwt-refresh-token.guard");
+const jwt_access_token_guard_1 = require("./jwt/jwt-access-token.guard");
 const jwt_strategy_1 = require("./jwt/jwt.strategy");
 const local_auth_guard_1 = require("./local/local-auth.guard");
 const local_strategy_1 = require("./local/local.strategy");
@@ -25,23 +26,19 @@ AuthModule = __decorate([
         imports: [
             (0, common_1.forwardRef)(() => user_module_1.UserModule),
             passport_1.PassportModule,
-            jwt_1.JwtModule.register({
-                secret: process.env.JWT_SECRET,
-                signOptions: {
-                    expiresIn: Number.parseInt(process.env.JWT_EXPIRATION_TIME),
-                },
-            }),
+            jwt_1.JwtModule.register({}),
             config_1.ConfigModule,
         ],
         providers: [
             auth_service_1.AuthService,
-            jwt_auth_guard_1.JwtAuthGuard,
             local_strategy_1.LocalStrategy,
             local_auth_guard_1.LocalAuthGuard,
-            jwt_strategy_1.JwtStrategy,
+            jwt_access_token_guard_1.AccessTokenGuard,
+            jwt_strategy_1.AccessTokenStrategy,
+            jwt_refresh_token_guard_1.RefreshTokenGuard,
+            jwt_strategy_1.RefreshTokenStrategy,
         ],
         controllers: [auth_controller_1.AuthController],
-        exports: [auth_service_1.AuthService, jwt_1.JwtModule, jwt_auth_guard_1.JwtAuthGuard],
     })
 ], AuthModule);
 exports.AuthModule = AuthModule;

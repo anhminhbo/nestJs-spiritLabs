@@ -18,10 +18,10 @@ const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const role_guard_1 = require("../role/role.guard");
-const jwt_auth_guard_1 = require("../auth/jwt/jwt-auth.guard");
 const swagger_1 = require("@nestjs/swagger");
 const role_decorator_1 = require("../role/role.decorator");
 const role_enum_1 = require("../role/role.enum");
+const jwt_access_token_guard_1 = require("../auth/jwt/jwt-access-token.guard");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -44,7 +44,7 @@ let UserController = class UserController {
 };
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, role_guard_1.RolesGuard),
+    (0, common_1.UseGuards)(jwt_access_token_guard_1.AccessTokenGuard, role_guard_1.RolesGuard),
     (0, role_decorator_1.Roles)(role_enum_1.Role.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Get all user' }),
     (0, swagger_1.ApiResponse)({
@@ -103,6 +103,8 @@ __decorate([
 ], UserController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, common_1.UseGuards)(jwt_access_token_guard_1.AccessTokenGuard, role_guard_1.RolesGuard),
+    (0, role_decorator_1.Roles)(role_enum_1.Role.ADMIN, role_enum_1.Role.CUSTOMER),
     (0, swagger_1.ApiOperation)({ summary: 'Get user based on id' }),
     (0, swagger_1.ApiParam)({
         name: 'id',
@@ -164,6 +166,8 @@ __decorate([
 ], UserController.prototype, "get", null);
 __decorate([
     (0, common_1.Post)('create'),
+    (0, common_1.UseGuards)(jwt_access_token_guard_1.AccessTokenGuard, role_guard_1.RolesGuard),
+    (0, role_decorator_1.Roles)(role_enum_1.Role.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Create new user in db' }),
     (0, swagger_1.ApiBody)({
         schema: {
@@ -206,6 +210,8 @@ __decorate([
 ], UserController.prototype, "create", null);
 __decorate([
     (0, common_1.Patch)('update'),
+    (0, common_1.UseGuards)(jwt_access_token_guard_1.AccessTokenGuard, role_guard_1.RolesGuard),
+    (0, role_decorator_1.Roles)(role_enum_1.Role.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Update user' }),
     (0, swagger_1.ApiBody)({
         schema: {
@@ -254,6 +260,8 @@ __decorate([
 ], UserController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('/delete/:id'),
+    (0, common_1.UseGuards)(jwt_access_token_guard_1.AccessTokenGuard, role_guard_1.RolesGuard),
+    (0, role_decorator_1.Roles)(role_enum_1.Role.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Create new user in db' }),
     (0, swagger_1.ApiParam)({
         name: 'id',

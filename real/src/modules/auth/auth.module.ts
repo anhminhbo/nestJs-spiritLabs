@@ -5,8 +5,9 @@ import { PassportModule } from '@nestjs/passport';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt/jwt-auth.guard';
-import { JwtStrategy } from './jwt/jwt.strategy';
+import { RefreshTokenGuard } from './jwt/jwt-refresh-token.guard';
+import { AccessTokenGuard } from './jwt/jwt-access-token.guard';
+import { AccessTokenStrategy, RefreshTokenStrategy } from './jwt/jwt.strategy';
 import { LocalAuthGuard } from './local/local-auth.guard';
 import { LocalStrategy } from './local/local.strategy';
 
@@ -14,22 +15,18 @@ import { LocalStrategy } from './local/local.strategy';
   imports: [
     forwardRef(() => UserModule),
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: Number.parseInt(process.env.JWT_EXPIRATION_TIME!),
-      },
-    }),
+    JwtModule.register({}),
     ConfigModule,
   ],
   providers: [
     AuthService,
-    JwtAuthGuard,
     LocalStrategy,
     LocalAuthGuard,
-    JwtStrategy,
+    AccessTokenGuard,
+    AccessTokenStrategy,
+    RefreshTokenGuard,
+    RefreshTokenStrategy,
   ],
   controllers: [AuthController],
-  exports: [AuthService, JwtModule, JwtAuthGuard],
 })
 export class AuthModule {}

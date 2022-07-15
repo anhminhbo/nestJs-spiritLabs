@@ -9,26 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtStrategy = void 0;
+exports.RefreshTokenStrategy = exports.AccessTokenStrategy = void 0;
 const common_1 = require("@nestjs/common");
 const token_extractor_1 = require("./token-extractor");
 const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
-let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
+let AccessTokenStrategy = class AccessTokenStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'accessToken') {
     constructor() {
         super({
-            jwtFromRequest: token_extractor_1.default,
+            jwtFromRequest: token_extractor_1.bearerTokenExtractor,
             ignoreExpiration: false,
-            secretOrKey: process.env.JWT_SECRET,
+            secretOrKey: 'accessToken',
         });
     }
     async validate(payload) {
         return { userId: payload.userId, role: payload.role };
     }
 };
-JwtStrategy = __decorate([
+AccessTokenStrategy = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [])
-], JwtStrategy);
-exports.JwtStrategy = JwtStrategy;
+], AccessTokenStrategy);
+exports.AccessTokenStrategy = AccessTokenStrategy;
+let RefreshTokenStrategy = class RefreshTokenStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'refreshToken') {
+    constructor() {
+        super({
+            jwtFromRequest: token_extractor_1.cookieTokenExtractor,
+            ignoreExpiration: false,
+            secretOrKey: 'refreshToken',
+        });
+    }
+    async validate(payload) {
+        return { userId: payload.userId, role: payload.role };
+    }
+};
+RefreshTokenStrategy = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [])
+], RefreshTokenStrategy);
+exports.RefreshTokenStrategy = RefreshTokenStrategy;
 //# sourceMappingURL=jwt.strategy.js.map

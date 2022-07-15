@@ -1,2 +1,3 @@
 import { Request } from 'express';
-export default function cookieOrBearerTokenExtractor(req: Request): any;
+export declare function cookieTokenExtractor(req: Request): any;
+export declare function bearerTokenExtractor(req: Request): string;
