@@ -32,7 +32,6 @@ let AuthController = class AuthController {
         return { accessToken };
     }
     async logout(req) {
-        console.log(req);
         req.res.clearCookie('refreshToken', cookie_options_1.cookieOptions);
         return req
             .res.header('Authorization', '')

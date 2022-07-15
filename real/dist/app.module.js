@@ -24,7 +24,6 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            user_module_1.UserModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
                 load: [app_config_1.default, postgres_config_1.default, kafka_config_1.default],
@@ -34,6 +33,7 @@ AppModule = __decorate([
             logger_module_1.KikoLoggerModule,
             database_module_1.DatabaseModule,
             auth_module_1.AuthModule,
+            user_module_1.UserModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

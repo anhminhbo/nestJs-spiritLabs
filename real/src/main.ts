@@ -8,7 +8,7 @@ import {
 } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { TransformResponseInterceptor } from './interceptor/transform-response.interceptor';
-
+import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
@@ -22,7 +22,7 @@ async function bootstrap() {
   };
 
   app.enableCors(options);
-
+  app.use(cookieParser());
   const configService = app.get<ConfigService>(ConfigService);
   app.setGlobalPrefix(configService.get('app.apiPrefix'), {
     exclude: ['/'],

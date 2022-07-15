@@ -5,6 +5,7 @@ const config_1 = require("@nestjs/config");
 const core_1 = require("@nestjs/core");
 const swagger_1 = require("@nestjs/swagger");
 const app_module_1 = require("./app.module");
+const cookieParser = require("cookie-parser");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, {
         bufferLogs: true,
@@ -17,6 +18,7 @@ async function bootstrap() {
         credentials: true,
     };
     app.enableCors(options);
+    app.use(cookieParser());
     const configService = app.get(config_1.ConfigService);
     app.setGlobalPrefix(configService.get('app.apiPrefix'), {
         exclude: ['/'],

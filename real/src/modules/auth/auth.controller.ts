@@ -24,7 +24,6 @@ export class AuthController {
   @UseGuards(AccessTokenGuard)
   @Post('/logout')
   async logout(@Req() req: Request) {
-    console.log(req);
     req.res!.clearCookie('refreshToken', cookieOptions);
     return req
       .res!.header('Authorization', '')
