@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Length } from 'class-validator';
-import { Role } from 'src/modules/role/role.enum';
+import { Role } from '../../role/role.enum';
 
 enum ValidationErrorMessage {
   InvalidFullNameLength = 'FullName must be between 1 and 255 letters!',

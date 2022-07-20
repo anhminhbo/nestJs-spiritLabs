@@ -31,6 +31,12 @@ export class RequestUser {
   userId: string;
   role?: string;
 }
+
+export class ResponseJson {
+  data: Record<string, any>;
+  meta?: string;
+}
+
 export class KafkaMessagePayload {
   body: any;
   messageId: string;

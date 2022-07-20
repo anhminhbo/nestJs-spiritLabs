@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.KafkaMessage = exports.KafkaMessagePayload = exports.RequestUser = exports.GetDataParams = void 0;
+exports.KafkaMessage = exports.KafkaMessagePayload = exports.ResponseJson = exports.RequestUser = exports.GetDataParams = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const swagger_1 = require("@nestjs/swagger");
@@ -46,6 +46,9 @@ exports.GetDataParams = GetDataParams;
 class RequestUser {
 }
 exports.RequestUser = RequestUser;
+class ResponseJson {
+}
+exports.ResponseJson = ResponseJson;
 class KafkaMessagePayload {
 }
 exports.KafkaMessagePayload = KafkaMessagePayload;

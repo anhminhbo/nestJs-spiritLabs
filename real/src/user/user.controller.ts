@@ -1,4 +1,3 @@
-import { RefreshTokenGuard } from './../auth/jwt/jwt-refresh-token.guard';
 import {
   Controller,
   Get,
@@ -11,7 +10,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from './entity/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesGuard } from '../role/role.guard';
@@ -20,6 +18,7 @@ import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../role/role.decorator';
 import { Role } from '../role/role.enum';
 import { AccessTokenGuard } from '../auth/jwt/jwt-access-token.guard';
+import { ResponseJson } from '../utils/class';
 
 @Controller('user')
 export class UserController {
@@ -79,8 +78,14 @@ export class UserController {
     status: 500,
     description: 'Internal Server Error',
   })
-  findAll(): Promise<User[]> {
-    return this.userService.findAll();
+  async findAll(): Promise<ResponseJson> {
+    const users = await this.userService.findAll();
+    const newUsers = users.map((user) => {
+      const { password, ...newUser } = user;
+      return newUser;
+    });
+
+    return { data: { users: newUsers } };
   }
 
   @Get(':id')
@@ -140,8 +145,9 @@ export class UserController {
     status: 500,
     description: 'Internal Server Error',
   })
-  get(@Param('id') id: number) {
-    return this.userService.findOne(id);
+  async get(@Param('id') id: number): Promise<ResponseJson> {
+    const { password, ...user } = await this.userService.findOne(id);
+    return { data: { user } };
   }
 
   @Post('create')
@@ -182,8 +188,9 @@ export class UserController {
     status: 500,
     description: 'Internal Server Error',
   })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<ResponseJson> {
+    const { password, ...user } = await this.userService.create(createUserDto);
+    return { data: { user } };
   }
 
   @Patch('update')
@@ -229,8 +236,12 @@ export class UserController {
     status: 500,
     description: 'Internal Server Error',
   })
-  update(@Query('id') id: number, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  async update(
+    @Query('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<ResponseJson> {
+    await this.userService.update(id, updateUserDto);
+    return { data: { message: 'Successfully' } };
   }
 
   @Delete('/delete/:id')
@@ -255,7 +266,8 @@ export class UserController {
     status: 500,
     description: 'Internal Server Error',
   })
-  deleteUser(@Param('id') id: number) {
-    return this.userService.delete(id);
+  async deleteUser(@Param('id') id: number): Promise<ResponseJson> {
+    await this.userService.delete(id);
+    return { data: { message: 'Successfully' } };
   }
 }

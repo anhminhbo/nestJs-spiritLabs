@@ -8,6 +8,10 @@ export declare class RequestUser {
     userId: string;
     role?: string;
 }
+export declare class ResponseJson {
+    data: Record<string, any>;
+    meta?: string;
+}
 export declare class KafkaMessagePayload {
     body: any;
     messageId: string;

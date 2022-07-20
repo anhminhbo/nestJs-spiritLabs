@@ -27,7 +27,7 @@ export class UserService {
   }
 
   async getOneByUsername(fullName: string) {
-    return this.userRepo.findOne({
+    return await this.userRepo.findOne({
       where: {
         fullName,
       },

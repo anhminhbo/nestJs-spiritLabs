@@ -10,8 +10,8 @@ import { KikoLoggerModule } from './logger/logger.module';
 import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import { SocketGatewayModule } from './socket-gateway/socket-gateway.module';
 import { DatabaseModule } from './database/database.module';
-import { UserModule } from './modules/user/user.module';
-import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({

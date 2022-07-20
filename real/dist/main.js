@@ -5,6 +5,7 @@ const config_1 = require("@nestjs/config");
 const core_1 = require("@nestjs/core");
 const swagger_1 = require("@nestjs/swagger");
 const app_module_1 = require("./app.module");
+const transform_response_interceptor_1 = require("./interceptor/transform-response.interceptor");
 const cookieParser = require("cookie-parser");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, {
@@ -24,6 +25,7 @@ async function bootstrap() {
         exclude: ['/'],
     });
     app.useGlobalPipes(new common_1.ValidationPipe({ transform: true, whitelist: true }));
+    app.useGlobalInterceptors(new transform_response_interceptor_1.TransformResponseInterceptor());
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Chat Backend')
         .setDescription('Chat Backend')

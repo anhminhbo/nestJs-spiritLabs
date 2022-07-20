@@ -17,8 +17,8 @@ const postgres_config_1 = require("./config/postgres.config");
 const logger_module_1 = require("./logger/logger.module");
 const socket_gateway_module_1 = require("./socket-gateway/socket-gateway.module");
 const database_module_1 = require("./database/database.module");
-const user_module_1 = require("./modules/user/user.module");
-const auth_module_1 = require("./modules/auth/auth.module");
+const user_module_1 = require("./user/user.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([

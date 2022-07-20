@@ -1,6 +1,7 @@
 import { BaseEntity } from '../../base.entity';
 import { Entity, Column } from 'typeorm';
 import { Role } from '../../role/role.enum';
+import { Exclude } from 'class-transformer';
 @Entity('User')
 export class User extends BaseEntity {
   @Column({
@@ -13,6 +14,7 @@ export class User extends BaseEntity {
     type: 'varchar',
     length: 100,
   })
+  @Exclude()
   password: string;
 
   @Column({

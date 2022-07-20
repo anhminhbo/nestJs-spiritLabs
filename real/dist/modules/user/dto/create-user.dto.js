@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-const role_enum_1 = require("../../role/role.enum");
+const role_enum_1 = require("../../../role/role.enum");
 var ValidationErrorMessage;
 (function (ValidationErrorMessage) {
     ValidationErrorMessage["InvalidFullNameLength"] = "FullName must be between 1 and 255 letters!";

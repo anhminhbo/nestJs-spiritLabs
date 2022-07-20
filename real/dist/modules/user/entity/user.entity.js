@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const base_entity_1 = require("../../base.entity");
 const typeorm_1 = require("typeorm");
-const role_enum_1 = require("../../role/role.enum");
+const role_enum_1 = require("../../../role/role.enum");
 let User = class User extends base_entity_1.BaseEntity {
 };
 __decorate([

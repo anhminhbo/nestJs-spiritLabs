@@ -17,11 +17,11 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
-const role_guard_1 = require("../role/role.guard");
+const role_guard_1 = require("../../role/role.guard");
 const swagger_1 = require("@nestjs/swagger");
-const role_decorator_1 = require("../role/role.decorator");
-const role_enum_1 = require("../role/role.enum");
-const jwt_access_token_guard_1 = require("../auth/jwt/jwt-access-token.guard");
+const role_decorator_1 = require("../../role/role.decorator");
+const role_enum_1 = require("../../role/role.enum");
+const jwt_access_token_guard_1 = require("../../auth/jwt/jwt-access-token.guard");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;

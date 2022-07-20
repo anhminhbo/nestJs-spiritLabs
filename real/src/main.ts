@@ -28,7 +28,7 @@ async function bootstrap() {
     exclude: ['/'],
   });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
-  // app.useGlobalInterceptors(new TransformResponseInterceptor());
+  app.useGlobalInterceptors(new TransformResponseInterceptor());
   const config = new DocumentBuilder()
     .setTitle('Chat Backend')
     .setDescription('Chat Backend')
